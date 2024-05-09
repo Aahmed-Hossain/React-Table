@@ -33,7 +33,7 @@ const FormSchema = z.object({
   title: z.string({
       required_error: "Please write an title.",
     }),
-    label: z.string({
+    level: z.string({
     required_error: "Please select a lebel.",
   }),
   status: z.string({
@@ -78,7 +78,7 @@ const AddTaskForm = ({setTask}) => {
 
   function onSubmit(data) {
     const defaultId = Math.random().toString(36).substr(2, 9); 
-    const defaultTask =  Math.random(3)
+    const defaultTask = "task-" +( '000' + Math.floor(Math.random()*1000)).slice(-3)
     const defaultDate = new Date().toISOString().slice(0,10); 
     const newData = {
       id: defaultId,
@@ -129,7 +129,7 @@ const AddTaskForm = ({setTask}) => {
             />
             <FormField
               control={form.control}
-              name="label"
+              name="level"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Label</FormLabel>
