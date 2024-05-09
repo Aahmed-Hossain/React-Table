@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
-  DialogClose,
+  // DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -191,9 +191,9 @@ const AddTaskForm = ({ setTask }) => {
           </div>
         </div>
         <div className="flex justify-end">
-          <DialogClose asChild>
+          {/* <DialogClose asChild> */}
             <Button type="submit">Submit</Button>
-          </DialogClose>
+          {/* </DialogClose> */}
         </div>
       </form>
     </Form>
