@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -31,9 +32,9 @@ import React from "react";
 
 const FormSchema = z.object({
   title: z.string({
-      required_error: "Please write an title.",
-    }),
-    level: z.string({
+    required_error: "Please write an title.",
+  }),
+  level: z.string({
     required_error: "Please select a lebel.",
   }),
   status: z.string({
@@ -44,13 +45,11 @@ const FormSchema = z.object({
   }),
 });
 
-export function DialogModal({setTask}) {
-  
-  
+export function DialogModal({ setTask }) {
   const [open, setOpen] = React.useState(false);
- 
+
   return (
-    <Dialog open={open}  onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">✛ Add Task</Button>
       </DialogTrigger>
@@ -58,8 +57,7 @@ export function DialogModal({setTask}) {
         <DialogHeader>
           <DialogTitle>Create task</DialogTitle>
           <DialogDescription>
-          
-Fill in the details below to create a new task.
+            Fill in the details below to create a new task.
           </DialogDescription>
         </DialogHeader>
         <AddTaskForm setTask={setTask} />
@@ -68,40 +66,23 @@ Fill in the details below to create a new task.
   );
 }
 
-const AddTaskForm = ({setTask}) => {
-  function closeModal() {
-    (!open)
-  }
+const AddTaskForm = ({ setTask }) => {
   const form = useForm({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data) {
-    const defaultId = Math.random().toString(36).substr(2, 9); 
-    const defaultTask = "task-" +( '000' + Math.floor(Math.random()*1000)).slice(-3)
-    const defaultDate = new Date().toISOString().slice(0,10); 
+    const defaultId = Math.random().toString(36).substr(2, 9);
+    const defaultTask =
+      "task-" + ("000" + Math.floor(Math.random() * 1000)).slice(-3);
+    const defaultDate = new Date().toISOString().slice(0, 10);
     const newData = {
       id: defaultId,
       task: defaultTask,
       date: defaultDate,
-      ...data
-  };
-    console.log("data:",newData);
-    setTask((prevTasks)=>[newData,...prevTasks 
-      
-
-      // {
-      //   id: "5kma53ae",
-      //   status: "success",
-      //   task: "task-004",
-      //   title: "we can get to the IP capacitor through the haptic",
-      //   level: "enhancement",
-      //   priority: "High",
-      //   date: "8/05/2024",
-      // },
-    ])
-    
-
+      ...data,
+    };
+    setTask((prevTasks) => [newData, ...prevTasks]);
   }
   return (
     <Form {...form}>
@@ -117,7 +98,7 @@ const AddTaskForm = ({setTask}) => {
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Textarea
-                    required_error
+                      required_error
                       placeholder="Title"
                       className="resize-none"
                       {...field}
@@ -143,13 +124,9 @@ const AddTaskForm = ({setTask}) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="bug">
-                        Bug
-                      </SelectItem>
+                      <SelectItem value="bug">Bug</SelectItem>
                       <SelectItem value="feature">Feature</SelectItem>
-                      <SelectItem value="enhancement">
-                        enhancement
-                      </SelectItem>
+                      <SelectItem value="enhancement">enhancement</SelectItem>
                       <SelectItem value="documentation">
                         Documentation
                       </SelectItem>
@@ -172,19 +149,14 @@ const AddTaskForm = ({setTask}) => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                       
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="todo">
-                        Todo
-                      </SelectItem>
+                      <SelectItem value="todo">Todo</SelectItem>
                       <SelectItem value="done">Done</SelectItem>
                       <SelectItem value="Cancelled">Cancelled</SelectItem>
-                      <SelectItem value="In Progress">
-                        In Progress
-                      </SelectItem>
+                      <SelectItem value="In Progress">In Progress</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -203,18 +175,13 @@ const AddTaskForm = ({setTask}) => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                       
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="Low">
-                        Low
-                      </SelectItem>
+                      <SelectItem value="Low">Low</SelectItem>
                       <SelectItem value="Medium">Medium</SelectItem>
-                      <SelectItem value="High">
-                        High
-                      </SelectItem>
+                      <SelectItem value="High">High</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -223,7 +190,11 @@ const AddTaskForm = ({setTask}) => {
             />
           </div>
         </div>
-        <div className="flex justify-end"><Button onClose={closeModal} type="submit">Submit</Button></div>
+        <div className="flex justify-end">
+          <DialogClose asChild>
+            <Button type="submit">Submit</Button>
+          </DialogClose>
+        </div>
       </form>
     </Form>
   );
